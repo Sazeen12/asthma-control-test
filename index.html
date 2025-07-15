@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Asthma Control Test – Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 1rem;
+      max-width: 600px;
+    }
+    h1 { color: #005eb8; }
+    .question { margin-bottom: 1rem; }
+    label { display: block; margin: 0.25rem 0; }
+    .result {
+      padding: 1rem;
+      margin-top: 1rem;
+      border: 2px solid #005eb8;
+      background: #eef5ff;
+    }
+    button {
+      background: #005eb8;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover { background: #004494; }
+  </style>
+</head>
+<body>
+  <h1>Asthma Control Test (ACT)</h1>
+  <form id="actForm">
+    <!-- Generate 5 questions with radio options -->
+    <div class="question">
+      <p>1. During the past 4 weeks, how often did your asthma symptoms (e.g., wheezing) bother you?</p>
+      <label><input type="radio" name="q1" value="5" required> Not at all (5)</label>
+      <label><input type="radio" name="q1" value="4"> A little (4)</label>
+      <label><input type="radio" name="q1" value="3"> Somewhat (3)</label>
+      <label><input type="radio" name="q1" value="2"> Quite a bit (2)</label>
+      <label><input type="radio" name="q1" value="1"> Extremely (1)</label>
+    </div>
+    <!-- Repeat for q2–q5 -->
+    <div class="question">
+      <p>2. During the past 4 weeks, how often did you use your rescue inhaler?</p>
+      <label><input type="radio" name="q2" value="5" required> Not at all (5)</label>
+      <label><input type="radio" name="q2" value="4"> Once a week or less (4)</label>
+      <label><input type="radio" name="q2" value="3"> 2–3 times per week (3)</label>
+      <label><input type="radio" name="q2" value="2"> Daily (2)</label>
+      <label><input type="radio" name="q2" value="1"> Several times per day (1)</label>
+    </div>
+    <div class="question">
+      <p>3. During the past 4 weeks, how much did asthma keep you from getting as much done at work, school, or home?</p>
+      <label><input type="radio" name="q3" value="5" required> Not at all (5)</label>
+      <label><input type="radio" name="q3" value="4"> A little bit (4)</label>
+      <label><input type="radio" name="q3" value="3"> Somewhat (3)</label>
+      <label><input type="radio" name="q3" value="2"> Quite a bit (2)</label>
+      <label><input type="radio" name="q3" value="1"> Extremely (1)</label>
+    </div>
+    <div class="question">
+      <p>4. During the past 4 weeks, how controlled would you say your asthma has been?</p>
+      <label><input type="radio" name="q4" value="5" required> Completely (5)</label>
+      <label><input type="radio" name="q4" value="4"> Well (4)</label>
+      <label><input type="radio" name="q4" value="3"> Somewhat (3)</label>
+      <label><input type="radio" name="q4" value="2"> Poorly (2)</label>
+      <label><input type="radio" name="q4" value="1"> Very poorly (1)</label>
+    </div>
+    <div class="question">
+      <p>5. In the past 4 weeks, how often did your asthma cause shortness of breath?</p>
+      <label><input type="radio" name="q5" value="5" required> Not at all (5)</label>
+      <label><input type="radio" name="q5" value="4"> Once or twice (4)</label>
+      <label><input type="radio" name="q5" value="3"> A few times a week (3)</label>
+      <label><input type="radio" name="q5" value="2"> Most days (2)</label>
+      <label><input type="radio" name="q5" value="1"> Every day (1)</label>
+    </div>
+    <button type="submit">Calculate Score</button>
+  </form>
+
+  <div id="result" class="result" style="display:none;"></div>
+
+  <script>
+    document.getElementById('actForm').onsubmit = function(e) {
+      e.preventDefault();
+      let total = 0;
+      for (let i = 1; i <= 5; i++) {
+        total += parseInt(document.querySelector('input[name="q' + i + '"]:checked').value);
+      }
+      const resultDiv = document.getElementById('result');
+      let interpretation = '';
+      if (total >= 20) interpretation = 'Well-controlled asthma.';
+      else if (total >= 16) interpretation = 'Not well-controlled asthma.';
+      else interpretation = 'Poorly controlled asthma.';
+      resultDiv.innerHTML = `<strong>Total Score: ${total}</strong><br>${interpretation}`;
+      resultDiv.style.display = 'block';
+    };
+  </script>
+</body>
+</html>
